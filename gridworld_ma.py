@@ -29,8 +29,8 @@ bg_color = pg.Color(255, 255, 255)
 line_color = pg.Color(128, 128, 128)
 
 # define primary positions
-goal_pos_x1 = 4*(WIDTH//Col_num)
-goal_pos_y1 = 3*(HEIGHT//Row_num)
+goal_pos_x1 = 7*(WIDTH//Col_num)
+goal_pos_y1 = 0*(HEIGHT//Row_num)
 
 goal_pos_x2 = 2*(WIDTH//Col_num)
 goal_pos_y2 = 0*(HEIGHT//Row_num)
