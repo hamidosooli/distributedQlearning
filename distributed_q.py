@@ -6,7 +6,7 @@ import h5py
 
 
 NUM_RUNS = 50
-NUM_EPISODES = 250000
+NUM_EPISODES = 1000000
 MAX_STEP = 1000
 MAX_REW = 100
 MID_REW = 1
@@ -58,23 +58,23 @@ def reward(next_state1, next_state2, t_step):
     elif (map[next_state1] == 1 or map[next_state2] == 2) and flag1:
         flag1 = False
         return MIN_REW, MIN_REW
-    # elif (((map[min(next_state1[0]+1, 9), next_state1[1]] == 1) or
-    #        (map[max(next_state1[0]-1, 0), next_state1[1]] == 1) or
-    #        (map[next_state1[0], min(next_state1[1]+1, 9)] == 1) or
-    #        (map[next_state1[0], max(next_state1[1]-1, 0)] == 1) or
-    #       (map[max(next_state1[0]-1, 0), max(next_state1[1]-1, 0)] == 1) or
-    #       (map[min(next_state1[0]+1, 9), min(next_state1[1]+1, 9)] == 1) or
-    #       (map[max(next_state1[0]-1, 0), min(next_state1[1]+1, 9)] == 1) or
-    #       (map[min(next_state1[0]+1, 9), max(next_state1[1]-1, 0)] == 1)) and
-    #        ((map[min(next_state2[0]+1, 9), next_state2[1]] == 2) or
-    #         (map[max(next_state2[0]-1, 0), next_state2[1]] == 2) or
-    #         (map[next_state2[0], min(next_state2[1]+1, 9)] == 2) or
-    #         (map[next_state2[0], max(next_state2[1]-1, 0)] == 2) or
-    #         (map[max(next_state2[0]-1, 0), max(next_state2[1]-1, 0)] == 2) or
-    #         (map[min(next_state2[0]+1, 9), min(next_state2[1]+1, 9)] == 2) or
-    #         (map[max(next_state2[0]-1, 0), min(next_state2[1]+1, 9)] == 2) or
-    #         (map[min(next_state2[0]+1, 9), max(next_state2[1]-1, 0)] == 2))):
-    #     return MID_REW, MID_REW
+    elif (((map[min(next_state1[0]+1, 9), next_state1[1]] == 1) or
+           (map[max(next_state1[0]-1, 0), next_state1[1]] == 1) or
+           (map[next_state1[0], min(next_state1[1]+1, 9)] == 1) or
+           (map[next_state1[0], max(next_state1[1]-1, 0)] == 1) or
+          (map[max(next_state1[0]-1, 0), max(next_state1[1]-1, 0)] == 1) or
+          (map[min(next_state1[0]+1, 9), min(next_state1[1]+1, 9)] == 1) or
+          (map[max(next_state1[0]-1, 0), min(next_state1[1]+1, 9)] == 1) or
+          (map[min(next_state1[0]+1, 9), max(next_state1[1]-1, 0)] == 1)) and
+           ((map[min(next_state2[0]+1, 9), next_state2[1]] == 2) or
+            (map[max(next_state2[0]-1, 0), next_state2[1]] == 2) or
+            (map[next_state2[0], min(next_state2[1]+1, 9)] == 2) or
+            (map[next_state2[0], max(next_state2[1]-1, 0)] == 2) or
+            (map[max(next_state2[0]-1, 0), max(next_state2[1]-1, 0)] == 2) or
+            (map[min(next_state2[0]+1, 9), min(next_state2[1]+1, 9)] == 2) or
+            (map[max(next_state2[0]-1, 0), min(next_state2[1]+1, 9)] == 2) or
+            (map[min(next_state2[0]+1, 9), max(next_state2[1]-1, 0)] == 2))):
+        return MID_REW, MID_REW
     else:
         return 0, 0
 
