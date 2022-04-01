@@ -30,10 +30,10 @@ line_color = pg.Color(128, 128, 128)
 
 # define primary positions
 goal_pos_x1 = 7*(WIDTH//Col_num)
-goal_pos_y1 = 0*(HEIGHT//Row_num)
+goal_pos_y1 = 2*(HEIGHT//Row_num)
 
 goal_pos_x2 = 2*(WIDTH//Col_num)
-goal_pos_y2 = 0*(HEIGHT//Row_num)
+goal_pos_y2 = 2*(HEIGHT//Row_num)
 # eleline_pos_x = WIDTH//Col_num
 # eleline_pos_y = HEIGHT//Row_num
 # tree_pos_x = goal_pos_x - 2*(WIDTH//Col_num)
