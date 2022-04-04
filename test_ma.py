@@ -44,7 +44,9 @@ with h5py.File('gridworld_agent1.hdf5', "r") as f1:
         Q2 = np.asarray(f2['Q'])
         rewards2 = np.asarray(f2['rewards'])
         steps2 = np.asarray(f2['steps'])
-        for _ in range(10000):
+
+        print('Beginning the search')
+        for i in range(10000):
             s1 = init_pose1
             s2 = init_pose2
             traj1 = [s1]
@@ -71,7 +73,16 @@ with h5py.File('gridworld_agent1.hdf5', "r") as f1:
                 a2_steps += 1
                 a2 = np.argmax(Q2[s2[0], s2[1], :])
                 sp2, re2 = transition(s2, a2)
+
                 traj2.append(sp2)
+                s2 = sp2
             T2.append(traj2)
             T2_num.append(a2_steps)
+            print(f'{i+1} trajectory checked')
 
+with h5py.File('gridworld_results.hdf5', "w") as f:
+    f.create_dataset('T1', data=T1)
+    f.create_dataset('T2', data=T2)
+    f.create_dataset('traj1', data=traj1)
+    f.create_dataset('traj2', data=traj2)
+    f.create_dataset('T2_num', data=T2_num)
