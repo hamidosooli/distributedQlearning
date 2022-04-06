@@ -31,7 +31,7 @@ def transition(state, action):
         return next_state, 0
 
 
-with h5py.File('gridworld_agent1.hdf5', "r") as f1:
+with h5py.File('gridworld_new_agent1.hdf5', "r") as f1:
     T1 = np.asarray(f1['T'])
     A1 = np.asarray(f1['A'])
     Q1 = np.asarray(f1['Q'])
@@ -39,12 +39,14 @@ with h5py.File('gridworld_agent1.hdf5', "r") as f1:
     steps1 = np.asarray(f1['steps'])
 
 
-    with h5py.File('gridworld_agent2.hdf5', "r") as f2:
+    with h5py.File('gridworld_new_agent2.hdf5', "r") as f2:
         T2 = np.asarray(f2['T'])
         A2 = np.asarray(f2['A'])
         Q2 = np.asarray(f2['Q'])
         rewards2 = np.asarray(f2['rewards'])
         steps2 = np.asarray(f2['steps'])
+        # plt.plot(steps1)
+        # plt.show()
         Qcheck(Q2, init_pose1, init_pose2)
         print('Beginning the search')
         for i in range(10000):
