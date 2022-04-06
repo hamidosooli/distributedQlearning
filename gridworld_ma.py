@@ -366,6 +366,86 @@ def animate(trajectory1, trajectory2, action_history1, action_history2, wait_tim
         run = False
     pg.quit()
 
+def Qcheck(Q, initpose1, initpose2, wait_time=0):
+    pg.init()  # initialize pygame
+    screen = pg.display.set_mode((WIDTH+2, HEIGHT+2))   # set up the screen
+    pg.display.set_caption("Hamid Osooli")              # add a caption
+    bg = pg.Surface(screen.get_size())                  # get a background surface
+    bg = bg.convert()
+    agent = Agent(screen)
+
+    # img_nat = pg.image.load('nature.png')
+    # img_mdf_nat = pg.transform.scale(img_nat, (WIDTH//Col_num, HEIGHT//Row_num))
+    # img_pud = pg.image.load('puddle.png')
+    # img_mdf_pud = pg.transform.scale(img_pud, (WIDTH//Col_num, HEIGHT//Row_num))
+    # img_dmd = pg.image.load('diamond.png')
+    # img_mdf_dmd = pg.transform.scale(img_dmd, (WIDTH//Col_num, HEIGHT//Row_num))
+    img_quad1 = pg.image.load('quad.png')
+    img_mdf_quad1 = pg.transform.scale(img_quad1, (WIDTH // Col_num, HEIGHT // Row_num))
+    img_home1 = pg.image.load('home.png')
+    img_mdf_home1 = pg.transform.scale(img_home1, (WIDTH // Col_num, HEIGHT // Row_num))
+    img_quad2 = pg.image.load('drone.png')
+    img_mdf_quad2 = pg.transform.scale(img_quad2, (WIDTH // Col_num, HEIGHT // Row_num))
+    img_home2 = pg.image.load('house-icon.png')
+    img_mdf_home2 = pg.transform.scale(img_home2, (WIDTH // Col_num, HEIGHT // Row_num))
+
+    # arr0 = pg.image.load('arrow0.png')
+    # arr0_mdf =
+    # arr1 = pg.image.load('arrow1.png')
+    # arr1_mdf = pg.transform.scale(arr1, (WIDTH // Col_num, HEIGHT // Row_num))
+    # arr2 = pg.image.load('arrow2.png')
+    # arr2_mdf = pg.transform.scale(arr2, (WIDTH // Col_num, HEIGHT // Row_num))
+    # arr3 = pg.image.load('arrow3.png')
+    # arr3_mdf = pg.transform.scale(arr3, (WIDTH // Col_num, HEIGHT // Row_num))
+    # img_mnt = pg.image.load('mountain.png')
+    # img_mdf_mnt = pg.transform.scale(img_mnt, (WIDTH // Col_num, HEIGHT // Row_num))
+    # img_ele = pg.image.load('electric-tower.png')
+    # img_mdf_ele = pg.transform.scale(img_ele, (WIDTH // Col_num, HEIGHT // Row_num))
+    # img_flm = pg.image.load('flame.png')
+    # img_mdf_flm = pg.transform.scale(img_flm, (WIDTH // Col_num, HEIGHT // Row_num))
+    # img_vlc = pg.image.load('volcano.png')
+    # img_mdf_vlc = pg.transform.scale(img_vlc, (WIDTH // Col_num, HEIGHT // Row_num))
+
+    bg.fill(bg_color)
+    screen.blit(bg, (0,0))
+    clock = pg.time.Clock()
+    pg.display.flip()
+    run = True
+    while run:
+        clock.tick(60)
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                run = False
+
+        # goal
+        screen.blit(img_mdf_home1, (goal_pos_x1, goal_pos_y1))
+        screen.blit(img_mdf_home2, (goal_pos_x2, goal_pos_y2))
+        # agent
+        screen.blit(img_mdf_quad1, (initpose1[1] * (WIDTH // Col_num), initpose1[0] * (HEIGHT // Row_num)))
+        screen.blit(img_mdf_quad2, (initpose2[1] * (WIDTH // Col_num), initpose2[0] * (HEIGHT // Row_num)))
+        draw_grid(screen)
+        pg.display.flip()
+        pg.display.update()
+        time.sleep(wait_time)  # wait between the shows
+        screen.blit(bg, (initpose1[1] * (WIDTH // Col_num), initpose1[0] * (HEIGHT // Row_num)))
+        screen.blit(bg, (initpose2[1] * (WIDTH // Col_num), initpose2[0] * (HEIGHT // Row_num)))
+        screen.blit(img_mdf_home1, (goal_pos_x1, goal_pos_y1))
+        screen.blit(img_mdf_home2, (goal_pos_x2, goal_pos_y2))
+        screen.blit(img_mdf_quad1, (initpose1[1] * (WIDTH // Col_num), initpose1[0] * (HEIGHT // Row_num)))
+        screen.blit(img_mdf_quad2, (initpose2[1] * (WIDTH // Col_num), initpose2[0] * (HEIGHT // Row_num)))
+
+        for row in range(Row_num):
+            for col in range(Col_num):
+                screen.blit(pg.transform.scale(pg.image.load('arrow'+str(np.argmax(Q[row, col, :]))+'.png'), (WIDTH // Col_num, HEIGHT // Row_num)),
+                            (col * (WIDTH // Col_num), row * (HEIGHT // Row_num)))
+
+
+        draw_grid(screen)
+        pg.display.flip()
+        pg.display.update()
+        # run = False
+    # pg.quit()
+
 if __name__ == "__main__":
     main()
 # print(map_builder())

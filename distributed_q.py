@@ -6,8 +6,8 @@ import h5py
 
 
 NUM_RUNS = 50
-NUM_EPISODES = 2000
-MAX_STEP = 100
+NUM_EPISODES = 1000000
+MAX_STEP = 1000
 MAX_REW = 100
 MID_REW = 1
 MIN_REW = 0.01
@@ -52,24 +52,26 @@ def transition(state, action):
 
 global flag1
 flag1 = True
-def reward(state1, state2, act1, act2):
-    next_state1 = transition(state1, act1)
-    next_state2 = transition(state2, act2)
+def reward(next_state1, next_state2):#state1, state2, act1, act2):
+    # next_state1 = transition(state1, act1)
+    # next_state2 = transition(state2, act2)
     global flag1
-    # if map[next_state1] == 1 and map[next_state2] == 2:
-    #     return MAX_REW, MAX_REW
+    if map[next_state1] == 1 and map[next_state2] == 2:
+        return MAX_REW, MAX_REW
+    elif map[next_state1] == 1 or map[next_state2] == 2:
+        return MIN_REW, MIN_REW
     # if (map[next_state1] == 1 or map[next_state2] == 2) and flag1:
     #     flag1 = False
     #     return MIN_REW, MIN_REW
-    if (((map[min(state1[0]+act1, 9), state1[1]] == 1) or
-           (map[max(state1[0]-act1, 0), state1[1]] == 1) or
-           (map[state1[0], min(state1[1]+act1, 9)] == 1) or
-           (map[state1[0], max(state1[1]-act1, 0)] == 1)) and
-           ((map[min(state2[0]+act2, 9), state2[1]] == 2) or
-            (map[max(state2[0]-act2, 0), state2[1]] == 2) or
-            (map[state2[0], min(state2[1]+act2, 9)] == 2) or
-            (map[state2[0], max(state2[1]-act2, 0)] == 2))):
-        return MAX_REW, MAX_REW
+    # if (((map[min(state1[0]+act1, 9), state1[1]] == 1) or
+    #        (map[max(state1[0]-act1, 0), state1[1]] == 1) or
+    #        (map[state1[0], min(state1[1]+act1, 9)] == 1) or
+    #        (map[state1[0], max(state1[1]-act1, 0)] == 1)) and
+    #        ((map[min(state2[0]+act2, 9), state2[1]] == 2) or
+    #         (map[max(state2[0]-act2, 0), state2[1]] == 2) or
+    #         (map[state2[0], min(state2[1]+act2, 9)] == 2) or
+    #         (map[state2[0], max(state2[1]-act2, 0)] == 2))):
+    #     return MAX_REW, MAX_REW
     else:
         return 0, 0
 
@@ -154,8 +156,8 @@ def q_learning(epsilon=0.1):
             sp2 = transition(s2, a2)
             T2.append(sp2)
 
-            re1, re2 = reward(s1, s2, a1, a2)
-            if re1!=0:
+            re1, re2 = reward(sp1, sp2)#, a1, a2)
+            if re1 != 0:
                 print(re1, re2)
             R1.append(re1)
             R2.append(re2)
@@ -168,10 +170,9 @@ def q_learning(epsilon=0.1):
             # game_mat1[s1[0], s1[1], a1, a2] = re1 + gamma * np.max(Q1[sp1[0], sp1[1], :])
             # game_mat2[s2[0], s2[1], a1, a2] = re2 + gamma * np.max(Q2[sp2[0], sp2[1], :])
 #################################################################################
-
             s1 = sp1
             s2 = sp2
-            if (re1 + re2 == 2*(MAX_REW)) or (t_step == MAX_STEP):
+            if (list(sp1) == GOAL1 and list(sp2) == GOAL2) or (list(sp1) == GOAL1) or (list(sp2) == GOAL2) or (t_step == MAX_STEP):
             #     flag = False
             #     finish_eps = eps
             # if not flag:

@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import h5py
-
+from gridworld_ma import Qcheck
 
 map = np.zeros((10, 10))
 map[2, 7] = 1  # Agent 1 Goal position
@@ -38,13 +38,14 @@ with h5py.File('gridworld_agent1.hdf5', "r") as f1:
     rewards1 = np.asarray(f1['rewards'])
     steps1 = np.asarray(f1['steps'])
 
+
     with h5py.File('gridworld_agent2.hdf5', "r") as f2:
         T2 = np.asarray(f2['T'])
         A2 = np.asarray(f2['A'])
         Q2 = np.asarray(f2['Q'])
         rewards2 = np.asarray(f2['rewards'])
         steps2 = np.asarray(f2['steps'])
-
+        Qcheck(Q2, init_pose1, init_pose2)
         print('Beginning the search')
         for i in range(10000):
             s1 = init_pose1

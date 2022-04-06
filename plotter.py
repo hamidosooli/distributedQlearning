@@ -12,7 +12,7 @@ Q2 = []
 rewards = []
 steps = []
 # for i in range(1, 6):
-with h5py.File('gridworld_ma_5.hdf5', 'r') as gw_ma:
+with h5py.File('gridworld_ma.hdf5', 'r') as gw_ma:
     T1.append(np.asarray(gw_ma['T1']))
     T2.append(np.asarray(gw_ma['T2']))
     rewards.append(np.asarray(gw_ma['rewards_run']))
