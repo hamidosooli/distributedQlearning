@@ -9,6 +9,20 @@ map[2, 2] = 2  # Agent 2 Goal position
 init_pose1 = (9, 0)
 init_pose2 = (9, 9)
 
+Row_num = 10
+Col_num = 10
+
+FORWARD = 0
+BACKWARD = 1
+RIGHT = 2
+LEFT = 3
+
+ACTIONS = [FORWARD, BACKWARD, RIGHT, LEFT]
+Act_num = len(ACTIONS)
+
+game_mat1 = np.zeros((Row_num, Col_num, Act_num, Act_num))
+game_mat2 = np.zeros((Row_num, Col_num, Act_num, Act_num))
+
 
 def transition(state, action):
     row = state[0]
@@ -47,7 +61,7 @@ with h5py.File('gridworld_new_agent1.hdf5', "r") as f1:
         steps2 = np.asarray(f2['steps'])
         # plt.plot(steps1)
         # plt.show()
-        Qcheck(Q2, init_pose1, init_pose2)
+        # Qcheck(Q2, init_pose1, init_pose2)
         print('Beginning the search')
         for i in range(10000):
             s1 = init_pose1
@@ -89,3 +103,4 @@ with h5py.File('gridworld_results.hdf5', "w") as f:
     f.create_dataset('traj1', data=traj1)
     f.create_dataset('traj2', data=traj2)
     f.create_dataset('T2_num', data=T2_num)
+    pass
